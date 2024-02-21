@@ -20,8 +20,8 @@ export default function Header() {
             <Button className='w-12 h-10 hidden sm:inline' color='gray'pill>
                 <FaMoon />
             </Button>
-            <Link to= '/sign-in'>
-                <Button color='purple' outline>Sign In</Button>
+            <Link to= '/sign-up'>
+                <Button color='purple' outline>Sign Up</Button>
             </Link>
             <Navbar.Toggle />
         </div>
