@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    profilePhoto:{
+    profilePicture:{
         type: String,
         default:'https://cdn.iconscout.com/icon/free/png-256/free-avatar-372-456324.png'
     },
