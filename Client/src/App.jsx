@@ -9,6 +9,8 @@ import Home from "./pages/Home"
 import Header from "./components/Header";
 import Footer from "./components/Footer"
 import PrivateRoutes from "./components/PrivateRoutes";
+import AdminPrivateRoutes from "./components/AdminPrivateRoutes";
+import CreatePost from "./pages/CreatePost";
 export default function App() {
   return (
     <BrowserRouter>
@@ -18,6 +20,9 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route element={<PrivateRoutes />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+        <Route element={<AdminPrivateRoutes />}>
+        <Route path="/create-post" element={<CreatePost />} />
         </Route>
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/sign-in" element={<SignIn />} />

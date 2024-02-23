@@ -20,11 +20,12 @@ import {
   signoutSuccess,
 } from "../redux/user/userSlice";
 
-import {HiOutlineExclamationCircle} from 'react-icons/hi'
+import {HiOutlineExclamationCircle} from 'react-icons/hi';
+import {Link} from 'react-router-dom';
 
 
 export default function DashProfile() {
-  const { currentUser , error} = useSelector((state) => state.user);
+  const { currentUser , error , loading} = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgess] = useState(null);
@@ -222,10 +223,16 @@ export default function DashProfile() {
           placeholder="password"
           onClick={handleChange}
         />
-        <Button type="submit" color="purple" outline>
-          {" "}
-          Update Profile
+        <Button type="submit" color="purple" outline disabled={loading || imageFileUploading}>
+        {loading ? 'Loading...' : 'Update'}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={'/create-post'}>
+            <Button type="button" color="purple" outline className="w-full">
+             Create a Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between cursor-pointer mt-3 px-2">
         <span onClick={()=>setShowModal(true)}>Delete account</span>
