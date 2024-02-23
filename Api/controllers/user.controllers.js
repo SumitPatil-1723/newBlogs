@@ -28,8 +28,9 @@ export const updateUser = async(req,res,next)=>{
         return next(errorHandler(400, 'Username must be lowercase'))
     }
     if(!req.body.username.match(/^[a-zA-Z0-9]+$/)){
-        return next(errorHandler(400, 'Username can contain letters and numbers'))
+        return next(errorHandler(400, 'Username can contain letters and numbers'));
     }
+}
     try {
         const updateUser = await User.findByIdAndUpdate(req.params.userId, {
             $set:{
@@ -38,12 +39,13 @@ export const updateUser = async(req,res,next)=>{
                 profilePicture: req.body.profilePicture,
                 password: req.body.password,
             },
-        },{new: true});
+        },{new: true}
+        );
         const {password, ...rest} = updateUser._doc;
         res.status(200).json(rest);
     } catch (error) {
-        next(error)
+        next(error);
     }
-   }
+   
 };
 
