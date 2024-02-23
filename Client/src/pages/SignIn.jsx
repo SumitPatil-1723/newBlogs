@@ -76,7 +76,7 @@ export default function Signin() {
           <div className='flex gap-2 text-sm mt-3'>
             <span> Don't have an account?</span>
             <Link to='/sign-up' className='text-blue-500'>
-              Sign in
+              Sign up
             </Link>
           </div>
           {
