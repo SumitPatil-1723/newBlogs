@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default:'https://cdn.iconscout.com/icon/free/png-256/free-avatar-372-456324.png'
     },
+    isAdmin:{
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps:true});
 
 const User = mongoose.model('User', UserSchema);
