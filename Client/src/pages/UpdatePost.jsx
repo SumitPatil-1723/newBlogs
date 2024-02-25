@@ -2,7 +2,7 @@ import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import React, { useEffect, useState } from "react";
-import {useNavigate , useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getStorage,
   ref,
@@ -18,30 +18,29 @@ export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgess] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
-  const [publishError, setPublishError] = useState(null)
+  const [publishError, setPublishError] = useState(null);
   const [formData, setFormData] = useState({});
-  const {currentUser} = useSelector(state => state.user)
+  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const {postId} = useParams();
-
-  useEffect(()=>{
+  const { postId } = useParams();
+  useEffect(() => {
     try {
-        const fetchPost = async ()=>{
-            const res = await fetch(`/api/post/getposts?postId=${postId}`);
-            const data = await res.json();
-            if(!res.ok){
-                console.log(data.message);
-                setPublishError(data.message);
-                return;
-            }
-            if(res.ok){
-                setPublishError(null);
-                setFormData(data.posts[0]);
-            }
+      const fetchPost = async () => {
+        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+        const data = await res.json();
+        if (!res.ok) {
+          console.log(data.message);
+          setPublishError(data.message);
+          return;
         }
-        fetchPost()
+        if (res.ok) {
+          setPublishError(null);
+          setFormData(data.posts[0]);
+        }
+      };
+      fetchPost();
     } catch (error) {
-        console.log(error)
+      console.log(error.message);
     }
   }, [postId]);
   const handleUploadImage = async () => {
@@ -57,9 +56,9 @@ export default function UpdatePost() {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
-        (snapShot) => {
+        (snapshot) => {
           const progess =
-            (snapShot.bytesTransferred / snapShot.totalBytes) * 100;
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
           setImageFileUploadProgess(progess.toFixed(0));
         },
@@ -80,30 +79,31 @@ export default function UpdatePost() {
       setImageFileUploadProgess(null);
       console.log(error);
     }
-  };
-
-  const  handleSubmit = async (e) =>{
+  }; 
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`,{
-        method: 'PUT',
-        headers: {'Content-Type' : 'application/json',
-      },
-        body: JSON.stringify(formData),
-      });
-    const data = await res.json(); 
-    if(!res.ok){
-      setPublishError(data.message);
-      return
+      const res = await fetch(
+        `/api/post/updatepost/${postId}/${currentUser._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+      if (res.ok) {
+        setPublishError(null);
+        navigate(`/post/${data.slug}`);
+      }
+    } catch (error) {
+      setPublishError("Someting went wrong");
     }
-    if (res.ok){
-      setPublishError(null);
-      navigate(`/post/${data.slug}`)
-    }
-  }catch (error){
-          setPublishError("Someting went wrong")
-  }
-};
+  };
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">Update a post</h1>
@@ -174,16 +174,14 @@ export default function UpdatePost() {
           value={formData.content}
           className="h-72 mb-12"
           required
-          onChange={(value) =>{
-            setFormData({...formData, content: value});
+          onChange={(value) => {
+            setFormData({ ...formData, content: value });
           }}
         />
         <Button type="submit" color="purple" outline>
           Update Post
         </Button>
-        {
-          publishError && <Alert color="failure">{publishError}</Alert>
-        }
+        {publishError && <Alert color="failure">{publishError}</Alert>}
       </form>
     </div>
   );
