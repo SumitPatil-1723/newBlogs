@@ -3,11 +3,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { set } from "mongoose";
 import { Button, Spinner } from "flowbite-react";
+import PostCard from "../components/PostCard";
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  const [recentPost , setRecentPost] = useState(null);
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -30,6 +32,21 @@ export default function PostPage() {
     fetchPost();
   }, [postSlug]);
 
+  useEffect(()=>{
+    try {
+        const fetchRecentPost = async () =>{
+            const res = await fetch(`/api/post/getposts?limit=3`);
+            const data = await res.json();
+            if(res.ok){
+                setRecentPost(data.posts);
+            }
+        }
+        fetchRecentPost();
+    } catch (error) {
+        console.log(error);
+    }
+   
+  }, [])
   if(loading) return (
     <div className="flex justify-center items-center min-h-screen">
         <Spinner size='xl'/>
@@ -45,8 +62,16 @@ export default function PostPage() {
       <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
       <span className='italic'>{post && (post.content.length /750).toFixed(0)} mins read</span>
   </div>
-  <div className='p-3 max-w-2xl mx-auto w-full post-content' dangerouslySetInnerHTML={{__html: post && post.content}}>
-
+  <div className='p-3 max-w-2xl mx-auto w-full post-content border-b  border-purple-800' dangerouslySetInnerHTML={{__html: post && post.content}}>
   </div>
-</main>;
+  <div className="flex flex-col justify-center items-center mb-5">
+    <h1 className="text-xl mt-5 ">Recent blogs</h1>
+    <div className='flex flex-wrap gap-5 mt-5 justify-center'>
+        {recentPost && recentPost.map((post) => (
+            <PostCard key={post._id} post={post} />
+        )
+        )}
+    </div>
+  </div>
+</main>
 }
