@@ -144,8 +144,8 @@ setPublishError("Someting went wrong")
         )}
         <ReactQuill
           theme="snow"
-          placeholder="Write a post"
           className="h-72 mb-12"
+          placeholder="Write a post"  
           required
           onChange={(value) =>{
             setFormData({...formData, content: value});
@@ -161,3 +161,4 @@ setPublishError("Someting went wrong")
     </div>
   );
 }
+

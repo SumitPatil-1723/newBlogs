@@ -1,4 +1,5 @@
 import React from "react";
+import { IoCreate } from "react-icons/io5";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
@@ -49,6 +50,14 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
+          {currentUser.isAdmin && (
+            <Link to={'/dashboard?tab=create-post'}>
+            <Sidebar.Item  active={tab === "create-post"}
+            icon={IoCreate } as ='div'>
+              Create Post
+            </Sidebar.Item>
+        </Link>
+          )}
           {currentUser.isAdmin && (
             <Link to={'/dashboard?tab=posts'}>
             <Sidebar.Item  active={tab === "posts"}

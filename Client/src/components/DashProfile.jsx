@@ -226,13 +226,6 @@ export default function DashProfile() {
         <Button type="submit" color="purple" outline disabled={loading || imageFileUploading}>
         {loading ? 'Loading...' : 'Update'}
         </Button>
-        {currentUser.isAdmin && (
-          <Link to={'/create-post'}>
-            <Button type="button" color="purple" outline className="w-full">
-             Create a Post
-            </Button>
-          </Link>
-        )}
       </form>
       <div className="text-red-500 flex justify-between cursor-pointer mt-3 px-2">
         <span onClick={()=>setShowModal(true)}>Delete account</span>

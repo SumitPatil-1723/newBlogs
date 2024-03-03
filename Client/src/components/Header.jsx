@@ -1,16 +1,12 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { FaMoon , FaSun } from "react-icons/fa";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
 import {useSelector, useDispatch}  from "react-redux";
-import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userSlice";
 export default function Header() {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const {currentUser} = useSelector(state => state.user)
-  const {theme} = useSelector(state => state.theme)
   
   const handleSignout = async() =>{
     try {
@@ -35,21 +31,7 @@ export default function Header() {
       >
         <span className="px-2 py-1"> Cuity </span>
       </Link>
-      <form>
-        <TextInput
-          type="text"
-          placeholder="Search.."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-        />
-      </form>
-      <Button className="w-12 h-10 lg:hidden" color="gary " pill>
-        <AiOutlineSearch />
-      </Button>
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline"  color="gray" pill onClick={()=>dispatch(toggleTheme())}>
-        {theme === 'light' ? <FaSun /> : <FaMoon />}
-        </Button>
         {currentUser ? (
           <Dropdown
             arrowIcon={false}
@@ -76,15 +58,15 @@ export default function Header() {
 
         <Navbar.Toggle />
       </div>
-      <Navbar.Collapse>
-        <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/">Home</Link>
+      <Navbar.Collapse className="p-3 m-1 bg-transparent"  >
+        <Navbar.Link className="bg-transparent"active={path === "/"} as={"div"} >
+          <Link  to="/">Home</Link >
         </Navbar.Link>
-        <Navbar.Link active={path === "/blogs"} as={"div"}>
+        <Navbar.Link className="bg-transparent" active={path === "/blogs"} as={"div"}>
           <Link to="/blogs">Blogs</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">About</Link>
+        <Navbar.Link className="bg-transparent" active={path === "/contact-us"} as={"div"}>
+          <Link to="/contact-us">Contact Us</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

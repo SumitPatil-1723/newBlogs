@@ -10,9 +10,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer"
 import PrivateRoutes from "./components/PrivateRoutes";
 import AdminPrivateRoutes from "./components/AdminPrivateRoutes";
-import CreatePost from "./pages/CreatePost";
+import DashCreatePost from "./pages/DashCreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
+import ContactUs from "./pages/ContactUs";
 export default function App() {
   return (
     <BrowserRouter>
@@ -24,10 +25,11 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route element={<AdminPrivateRoutes />}>
-        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/create-post" element={<DashCreatePost />} />
         <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/post/:postSlug" element={<PostPage />} />
