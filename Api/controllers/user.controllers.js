@@ -2,6 +2,8 @@ import { triggerAsyncId } from "async_hooks";
 import { errorHandler } from "../util/error.js";
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
+import Contact from "../models/contact.model.js";
+
 export const test = (req, res) => {
   res.json({ message: "Api is working" });
 };
@@ -112,3 +114,15 @@ export const getusers = async (req, res, next) => {
     next(error);
   }
 };
+
+export const contact = async (req, res, next) =>{
+  const newContact = new Contact({
+    ...req.body,
+  });
+  try {
+    const savedContact = await newContact.save();
+    res.status(201).json(savedContact);
+  } catch (error) {
+    next(error)
+  }
+}
