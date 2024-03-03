@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import Dashboard from "./pages/Dashboard";
-import About from "./pages/About";
 import Blogs from "./pages/Blogs";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -20,7 +19,6 @@ export default function App() {
     <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
         <Route element={<PrivateRoutes />}>
         <Route path="/dashboard" element={<Dashboard />} />
         </Route>
